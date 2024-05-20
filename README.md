@@ -48,3 +48,22 @@ Si deseas contribuir a este proyecto, siéntete libre de abrir un pull request o
 
 ¡Diviértete usando este bot!
 
+## Configuración adicional modelo de datos yolo
+
+Antes de ejecutar el bot, asegúrate de realizar lo siguiente:
+
+1. Descarga el archivo `yolov3.weights` desde el siguiente enlace: [yolov3.weights](https://pjreddie.com/media/files/yolov3.weights).
+2. Pega el archivo descargado en la carpeta `/yolo_object_detector/models` dentro de este repositorio.
+
+Este archivo `yolov3.weights` es necesario para el funcionamiento correcto del detector de objetos YOLO utilizado por el bot. Asegúrate de tenerlo en la ubicación especificada antes de ejecutar el bot.
+
+## Configuración del Token del Bot
+
+Antes de ejecutar el bot, asegúrate de realizar lo siguiente:
+
+1. Obtén el token de tu bot de Telegram proporcionado por BotFather.
+2. Abre el archivo `TOKENS.py` en la raíz del proyecto.
+3. Reemplaza el valor de la variable `TOKEN` con tu token de bot obtenido en el paso anterior.
+
+Es importante configurar correctamente el token del bot para que pueda interactuar con la API de Telegram. Asegúrate de haber realizado estos pasos antes de ejecutar el bot.
+
