@@ -29,11 +29,11 @@ def handle_help(message):
     help_txt = "ℹ️ **Bienvenido al Centro de Ayuda**\n\n"
     help_txt += "Aquí tienes una lista de comandos disponibles y su funcionalidad:\n\n"
     
-    help_txt += "🚀 [`/start`](command:/start): Inicia la conversación con el bot.\n"
-    help_txt += "📚 [`/help`](command:/help): Muestra esta información de ayuda sobre cómo utilizar el bot.\n"
-    help_txt += "📷 [`/foto`](command:/foto): Solicita al bot una foto desde la cámara web en línea.\n"
-    help_txt += "🖼️ [`/foto_procesada`](command:/foto_procesada): Solicita al bot una foto con detección de objetos.\n"
-    help_txt += "🔄 [`/foto_procesada_loop`](command:/foto_procesada_loop): Activa el modo de detección de objetos en bucle.\n\n"
+    help_txt += "🚀 [/start](command:/start): Inicia la conversación con el bot.\n"
+    help_txt += "📚 [/help](command:/help): Muestra esta información de ayuda sobre cómo utilizar el bot.\n"
+    help_txt += "📷 [/foto](command:/foto): Solicita al bot una foto desde la cámara web en línea.\n"
+    help_txt += "🖼️ [/foto_procesada](command:/foto_procesada): Solicita al bot una foto con detección de objetos.\n"
+    help_txt += "🔄 [/foto_procesada_loop](command:/foto_procesada_loop): Activa el modo de detección de objetos en bucle.\n\n"
 
     help_txt += "¡No dudes en utilizar estos comandos para interactuar conmigo! 😊"
     
