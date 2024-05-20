@@ -29,8 +29,6 @@ def handle_help(message):
     
     help_txt += "🚀 `/start`: Inicia la conversación con el bot.\n"
     help_txt += "📚 `/help`: Muestra esta información de ayuda sobre cómo utilizar el bot.\n"
-    help_txt += "👋 `/saludo`: Activa el saludo automático del bot.\n"
-    help_txt += "🛑 `/stop_saludo`: Detiene el saludo automático del bot.\n"
     help_txt += "📷 `/foto`: Solicita al bot una foto desde la cámara web en línea.\n"
     help_txt += "🖼️ `/foto_procesada`: Solicita al bot una foto con detección de objetos.\n"
     help_txt += "🔄 `/foto_procesada_loop`: Activa el modo de detección de objetos en bucle.\n\n"
