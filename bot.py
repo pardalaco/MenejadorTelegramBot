@@ -24,7 +24,20 @@ def handle_start(message):
 # Manejador para el comando '/help'
 @bot.message_handler(commands=['help'])
 def handle_help(message):
-    bot.send_message(message.chat.id, "Puedes enviarme mensajes y yo te responderé. También puedes usar /start para comenzar y /help para obtener ayuda.")
+    help_txt = "ℹ️ **Bienvenido al Centro de Ayuda**\n\n"
+    help_txt += "Aquí tienes una lista de comandos disponibles y su funcionalidad:\n\n"
+    
+    help_txt += "🚀 `/start`: Inicia la conversación con el bot.\n"
+    help_txt += "📚 `/help`: Muestra esta información de ayuda sobre cómo utilizar el bot.\n"
+    help_txt += "👋 `/saludo`: Activa el saludo automático del bot.\n"
+    help_txt += "🛑 `/stop_saludo`: Detiene el saludo automático del bot.\n"
+    help_txt += "📷 `/foto`: Solicita al bot una foto desde la cámara web en línea.\n"
+    help_txt += "🖼️ `/foto_procesada`: Solicita al bot una foto con detección de objetos.\n"
+    help_txt += "🔄 `/foto_procesada_loop`: Activa el modo de detección de objetos en bucle.\n\n"
+
+    help_txt += "¡No dudes en utilizar estos comandos para interactuar conmigo! 😊"
+    
+    bot.send_message(message.chat.id, help_txt, parse_mode='Markdown')
 
 # Manejador para el comando '/saludo'
 @bot.message_handler(commands=['saludo'])
