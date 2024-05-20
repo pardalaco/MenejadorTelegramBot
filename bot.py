@@ -17,6 +17,7 @@ bot = telebot.TeleBot(TOKENS.TOKEN)
 saludo_activo = False
 
 # Manejador para el comando '/start'
+@bot.message_handler(commands=['start'])
 def handle_start(message):
     welcome_msg = "¡Hola! Soy un bot creado con telebot. ¡Bienvenido!\n\n"
     welcome_msg += "Si necesitas ayuda o información sobre cómo utilizar este bot, te recomiendo pulsar el comando /help."
