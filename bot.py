@@ -5,6 +5,7 @@ import time
 import imgDownloader
 import yolo_object_detector.yolo_detector_function as yl
 import time
+import datetime
 
 # Reemplaza 'TOKEN' con el token de tu bot proporcionado por BotFather
 import TOKENS
@@ -88,7 +89,8 @@ def handle_photo(message):
         image = imgDownloader.descargar_imagen('https://www.acifalcoi.com/webcam/menejador.jpg')
         image = imgDownloader.imagen_to_cv2(image)
 
-        print("Imagen descargada")
+        fecha_descarga = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"Imagen descargada ({fecha_descarga})")
 
         image_yl = yl.detect_objects(image)
         image = image_yl[0]
