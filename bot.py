@@ -90,7 +90,7 @@ def handle_photo(message):
         image = imgDownloader.imagen_to_cv2(image)
 
         fecha_descarga = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"Imagen descargada ({fecha_descarga})")
+        print(f"Imagen descargada ({fecha_descarga})", end="\r")
 
         image_yl = yl.detect_objects(image)
         image = image_yl[0]
@@ -115,6 +115,6 @@ def handle_photo(message):
 def handle_text(message):
     bot.reply_to(message, "¡Hola! Soy un bot creado con telebot. Puedo responder a tus mensajes.")
 
-
+print("Iniciando bot...")
 # Ejecutar el bot
 bot.polling()
