@@ -17,9 +17,10 @@ bot = telebot.TeleBot(TOKENS.TOKEN)
 saludo_activo = False
 
 # Manejador para el comando '/start'
-@bot.message_handler(commands=['start'])
 def handle_start(message):
-    bot.send_message(message.chat.id, "¡Hola! Soy un bot creado con telebot. ¡Bienvenido!")
+    welcome_msg = "¡Hola! Soy un bot creado con telebot. ¡Bienvenido!\n\n"
+    welcome_msg += "Si necesitas ayuda o información sobre cómo utilizar este bot, te recomiendo pulsar el comando /help."
+    bot.send_message(message.chat.id, welcome_msg)
 
 # Manejador para el comando '/help'
 @bot.message_handler(commands=['help'])
@@ -101,7 +102,7 @@ def handle_photo(message):
         image = imgDownloader.imagen_to_cv2(image)
 
         fecha_descarga = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"Imagen descargada ({fecha_descarga})", end="\r")
+        print(f"Imagen descargada ({fecha_descarga}), {str(message.chat.id)}", end="\r")
 
         image_yl = yl.detect_objects(image)
         image = image_yl[0]
