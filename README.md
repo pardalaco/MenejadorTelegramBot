@@ -36,11 +36,9 @@ Antes de ejecutar el bot, asegúrate de haber configurado el archivo TOKENS.py c
 
 - `/start`: Inicia la conversación con el bot.
 - `/help`: Muestra información de ayuda sobre cómo utilizar el bot.
-- `/saludo`: Activa el saludo automático del bot.
-- `/stop_saludo`: Detiene el saludo automático del bot.
 - `/foto`: Solicita al bot una foto desde la cámara web en línea.
 - `/foto_procesada`: Solicita al bot una foto con detección de objetos.
-- `/foto_procesada_loop`: Activa el modo de detección de objetos en bucle.
+- `/last_person`: Solicita al bot foto de la ultima persona que ha pasado.
 
 ## Contribuciones
 

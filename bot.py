@@ -33,27 +33,11 @@ def main():
         help_txt += "📚 [/help](command:/help): Muestra esta información de ayuda sobre cómo utilizar el bot.\n"
         help_txt += "📷 [/foto](command:/foto): Solicita al bot una foto desde la cámara web en línea.\n"
         help_txt += "🖼️ [/foto_procesada](command:/foto_procesada): Solicita al bot una foto con detección de objetos.\n"
-        help_txt += "🔄 [/foto_procesada_loop](command:/foto_procesada_loop): Activa el modo de detección de objetos en bucle.\n\n"
+        help_txt += "🔄 [/last_person](command:/last_person): Solicita al bot foto de la ultima persona que ha pasado.\n\n"
 
         help_txt += "¡No dudes en utilizar estos comandos para interactuar conmigo! 😊"
 
         bot.send_message(message.chat.id, help_txt, parse_mode='Markdown')
-
-    # Manejador para el comando '/saludo'
-    @bot.message_handler(commands=['saludo'])
-    def handle_hola(message):
-        nonlocal saludo_activo
-        saludo_activo = True
-        while saludo_activo:
-            bot.send_message(message.chat.id, "Hola")
-            time.sleep(5)
-
-    # Manejador para el comando '/stop_saludo'
-    @bot.message_handler(commands=['stop_saludo'])
-    def handle_stop_saludo(message):
-        nonlocal saludo_activo
-        saludo_activo = False
-        bot.send_message(message.chat.id, "El saludo ha sido detenido.")
 
     # Manejador para el comando '/foto'
     @bot.message_handler(commands=['foto'])
@@ -92,38 +76,8 @@ def main():
         bot.send_photo(message.chat.id, photo=image_bytes)
         bot.send_message(message.chat.id, str(labels))
 
-    # Función para manejar el comando '/foto_procesada_loop'
-    @bot.message_handler(commands=['foto_procesada_loop'])
-    def handle_photo(message):
-        print("Procesando...")
-        bot.send_message(message.chat.id, "Procesando en loop")
-        while True:  # Bucle infinito para ejecutar continuamente
-            # Cargar la imagen con OpenCV
-            image = imgTools.descargar_imagen('https://www.acifalcoi.com/webcam/menejador.jpg')
-            image = imgTools.imagen_to_cv2(image)
 
-            fecha_descarga = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            print(f"Imagen descargada ({fecha_descarga}), {str(message.chat.id)}", end="\r")
-
-            image_yl = yl.detect_objects(image)
-            image = image_yl[0]
-            labels = image_yl[1]
-
-            # Verificar si hay algo en labels antes de enviar el mensaje
-            if labels:
-                # Convertir la imagen a un formato adecuado para enviarla a través de Telegram
-                image_encode = cv2.imencode('.jpg', image)[1]
-                # Crear un array de bytes para enviar la imagen
-                image_bytes = np.array(image_encode).tobytes()
-
-                # Enviar la imagen
-                bot.send_photo(message.chat.id, photo=image_bytes)
-                # bot.send_message(message.chat.id, str(labels))
-
-            # Esperar un tiempo antes de la siguiente iteración para evitar sobrecargar el sistema
-            time.sleep(60)  # Esperar 1 minuto antes de la próxima ejecución
-
-    # Función para manejar el comando '/foto_procesada_loop'
+    # Función para manejar el comando '/last_person'
     @bot.message_handler(commands=['last_person'])
     def handle_photo(message):
         
