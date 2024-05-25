@@ -3,3 +3,4 @@ TOKENS.py
 /__pycache__
 yolo_object_detector/model/yolov3.weights
 /yolo_object_detector/__pycache__
+/img
