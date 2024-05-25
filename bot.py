@@ -2,7 +2,7 @@ import telebot
 import cv2
 import numpy as np
 import time
-import imgDownloader
+import imgTools
 import yolo_object_detector.yolo_detector_function as yl
 import time
 import datetime
@@ -60,8 +60,8 @@ def handle_stop_saludo(message):
 def handle_photo(message):
 
     # Cargar la imagen con OpenCV
-    image = imgDownloader.descargar_imagen('https://www.acifalcoi.com/webcam/menejador.jpg')
-    image = imgDownloader.imagen_to_cv2(image)
+    image = imgTools.descargar_imagen('https://www.acifalcoi.com/webcam/menejador.jpg')
+    image = imgTools.imagen_to_cv2(image)
 
     # Convertir la imagen a un formato adecuado para enviarla a través de Telegram
     image_encode = cv2.imencode('.jpg', image)[1]
@@ -76,8 +76,8 @@ def handle_photo(message):
 def handle_photo(message):
 
     # Cargar la imagen con OpenCV
-    image = imgDownloader.descargar_imagen('https://www.acifalcoi.com/webcam/menejador.jpg')
-    image = imgDownloader.imagen_to_cv2(image)
+    image = imgTools.descargar_imagen('https://www.acifalcoi.com/webcam/menejador.jpg')
+    image = imgTools.imagen_to_cv2(image)
 
     image_yl = yl.detect_objects(image)
     image = image_yl[0]
@@ -99,8 +99,8 @@ def handle_photo(message):
     bot.send_message(message.chat.id, "Procesando en loop")
     while True:  # Bucle infinito para ejecutar continuamente
         # Cargar la imagen con OpenCV
-        image = imgDownloader.descargar_imagen('https://www.acifalcoi.com/webcam/menejador.jpg')
-        image = imgDownloader.imagen_to_cv2(image)
+        image = imgTools.descargar_imagen('https://www.acifalcoi.com/webcam/menejador.jpg')
+        image = imgTools.imagen_to_cv2(image)
 
         fecha_descarga = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         print(f"Imagen descargada ({fecha_descarga}), {str(message.chat.id)}", end="\r")
