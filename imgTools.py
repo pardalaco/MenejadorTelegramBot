@@ -71,6 +71,7 @@ def obtener_ultima_imagen_cv(ruta_carpeta="./img/"):
                 imagenes.append(archivo)
     else:
         print("La ruta proporcionada no es un directorio válido.")
+        return
     
     if imagenes is None:
         return
