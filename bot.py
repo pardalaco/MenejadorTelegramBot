@@ -5,6 +5,7 @@ import time
 import imgTools
 import yolo_object_detector.yolo_detector_function as yl
 import datetime
+import videoTools
 
 # Reemplaza 'TOKEN' con el token de tu bot proporcionado por BotFather
 import TOKENS
@@ -93,6 +94,23 @@ def main():
 
         # Enviar la imagen
         bot.send_photo(message.chat.id, photo=image_bytes)
+
+    # Manejador para el comando '/video'
+    @bot.message_handler(commands=['video'])
+    def handle_video(message):
+        # Ruta al video que deseas enviar
+        video_path = videoTools.obtener_ultimo_video_grabado("./video/")
+
+        if video_path is None:
+            bot.send_message(message.chat.id, "Aun no hay videos")   
+            return
+        
+        try:
+            # Envía el video al chat desde donde se recibió el comando
+            with open(video_path, 'rb') as video:
+                bot.send_video(message.chat.id, video)
+        except Exception as e:
+            bot.reply_to(message, f"No se pudo enviar el video. Error: {e}")
 
     # Manejador para mensajes de texto
     @bot.message_handler(func=lambda message: True)
