@@ -76,8 +76,7 @@ def obtener_ultima_imagen_cv(ruta_carpeta="./img/"):
         return
     
     imagenes.sort()
-    print(imagenes)
-    print(len(imagenes)-1)
+
 
     imagen_cv = cv2.imread(ruta_carpeta + imagenes[len(imagenes)-1])
 
