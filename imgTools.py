@@ -57,7 +57,7 @@ def guardar_imagen_cv2(imagen_cv2, carpeta_base='./img/'):
     # Guardar la imagen en formato JPG
     cv2.imwrite(nombre_archivo_completo, imagen_cv2)
 
-def obtener_imagen_cv(ruta_carpeta="./img"):
+def obtener_ultima_imagen_cv(ruta_carpeta="./img/"):
     # Lista para almacenar los nombres de archivo de las imágenes
     imagenes = []
     
@@ -76,8 +76,10 @@ def obtener_imagen_cv(ruta_carpeta="./img"):
         return
     
     imagenes.sort()
+    print(imagenes)
+    print(len(imagenes)-1)
 
-    imagen_cv = cv2.imread(len(imagenes)-1)
+    imagen_cv = cv2.imread(ruta_carpeta + imagenes[len(imagenes)-1])
 
     return imagen_cv
 

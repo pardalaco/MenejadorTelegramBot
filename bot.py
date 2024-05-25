@@ -123,6 +123,23 @@ def main():
             # Esperar un tiempo antes de la siguiente iteración para evitar sobrecargar el sistema
             time.sleep(60)  # Esperar 1 minuto antes de la próxima ejecución
 
+    # Función para manejar el comando '/foto_procesada_loop'
+    @bot.message_handler(commands=['last_person'])
+    def handle_photo(message):
+        
+        img = imgTools.obtener_ultima_imagen_cv()
+
+        if img is None:
+            bot.send_message(message.chat.id, "Aun no hay imagenes")
+            return
+
+        image_encode = cv2.imencode('.jpg', img)[1]
+        # Crear un array de bytes para enviar la imagen
+        image_bytes = np.array(image_encode).tobytes()
+
+        # Enviar la imagen
+        bot.send_photo(message.chat.id, photo=image_bytes)
+
     # Manejador para mensajes de texto
     @bot.message_handler(func=lambda message: True)
     def handle_text(message):

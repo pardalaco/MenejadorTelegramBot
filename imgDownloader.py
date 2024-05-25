@@ -22,7 +22,7 @@ def main():
 
         # Verificar si hay algo en labels antes de enviar el mensaje
         if 'person' in labels:
-            # imgTools.borrar_contenido_carpeta()
+            imgTools.borrar_contenido_carpeta()
             imgTools.guardar_imagen_cv2(image)
             print()
             print(f"Imagen guardada ({fecha_descarga}).")
