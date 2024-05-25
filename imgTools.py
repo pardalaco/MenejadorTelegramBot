@@ -73,7 +73,7 @@ def obtener_ultima_imagen_cv(ruta_carpeta="./img/"):
         print("La ruta proporcionada no es un directorio válido.")
         return
     
-    if imagenes is None:
+    if not imagenes:
         return
     
     imagenes.sort()
