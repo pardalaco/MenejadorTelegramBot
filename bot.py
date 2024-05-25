@@ -4,130 +4,134 @@ import numpy as np
 import time
 import imgTools
 import yolo_object_detector.yolo_detector_function as yl
-import time
 import datetime
 
 # Reemplaza 'TOKEN' con el token de tu bot proporcionado por BotFather
 import TOKENS
 
-# Crea una instancia del bot
-bot = telebot.TeleBot(TOKENS.TOKEN)
+def main():
+    # Crea una instancia del bot
+    bot = telebot.TeleBot(TOKENS.TOKEN)
 
-# Variable para controlar el estado del saludo
-saludo_activo = False
-
-# Manejador para el comando '/start'
-@bot.message_handler(commands=['start'])
-def handle_start(message):
-    welcome_msg = "¡Hola! Soy un bot creado con telebot. ¡Bienvenido!\n\n"
-    welcome_msg += "Si necesitas ayuda o información sobre cómo utilizar este bot, te recomiendo pulsar el comando /help."
-    bot.send_message(message.chat.id, welcome_msg)
-
-# Manejador para el comando '/help'
-@bot.message_handler(commands=['help'])
-def handle_help(message):
-    help_txt = "ℹ️ **Bienvenido al Centro de Ayuda**\n\n"
-    help_txt += "Aquí tienes una lista de comandos disponibles y su funcionalidad:\n\n"
-    
-    help_txt += "🚀 [/start](command:/start): Inicia la conversación con el bot.\n"
-    help_txt += "📚 [/help](command:/help): Muestra esta información de ayuda sobre cómo utilizar el bot.\n"
-    help_txt += "📷 [/foto](command:/foto): Solicita al bot una foto desde la cámara web en línea.\n"
-    help_txt += "🖼️ [/foto_procesada](command:/foto_procesada): Solicita al bot una foto con detección de objetos.\n"
-    help_txt += "🔄 [/foto_procesada_loop](command:/foto_procesada_loop): Activa el modo de detección de objetos en bucle.\n\n"
-
-    help_txt += "¡No dudes en utilizar estos comandos para interactuar conmigo! 😊"
-    
-    bot.send_message(message.chat.id, help_txt, parse_mode='Markdown')
-
-# Manejador para el comando '/saludo'
-@bot.message_handler(commands=['saludo'])
-def handle_hola(message):
-    global saludo_activo
-    saludo_activo = True
-    while saludo_activo:
-        bot.send_message(message.chat.id, "Hola")
-        time.sleep(5)
-
-# Manejador para el comando '/stop_saludo'
-@bot.message_handler(commands=['stop_saludo'])
-def handle_stop_saludo(message):
-    global saludo_activo
+    # Variable para controlar el estado del saludo
     saludo_activo = False
-    bot.send_message(message.chat.id, "El saludo ha sido detenido.")
 
-# Manejador para el comando '/foto'
-@bot.message_handler(commands=['foto'])
-def handle_photo(message):
+    # Manejador para el comando '/start'
+    @bot.message_handler(commands=['start'])
+    def handle_start(message):
+        welcome_msg = "¡Hola! Soy un bot creado con telebot. ¡Bienvenido!\n\n"
+        welcome_msg += "Si necesitas ayuda o información sobre cómo utilizar este bot, te recomiendo pulsar el comando /help."
+        bot.send_message(message.chat.id, welcome_msg)
 
-    # Cargar la imagen con OpenCV
-    image = imgTools.descargar_imagen('https://www.acifalcoi.com/webcam/menejador.jpg')
-    image = imgTools.imagen_to_cv2(image)
+    # Manejador para el comando '/help'
+    @bot.message_handler(commands=['help'])
+    def handle_help(message):
+        help_txt = "ℹ️ **Bienvenido al Centro de Ayuda**\n\n"
+        help_txt += "Aquí tienes una lista de comandos disponibles y su funcionalidad:\n\n"
 
-    # Convertir la imagen a un formato adecuado para enviarla a través de Telegram
-    image_encode = cv2.imencode('.jpg', image)[1]
-    # Crear un array de bytes para enviar la imagen
-    image_bytes = np.array(image_encode).tobytes()
+        help_txt += "🚀 [/start](command:/start): Inicia la conversación con el bot.\n"
+        help_txt += "📚 [/help](command:/help): Muestra esta información de ayuda sobre cómo utilizar el bot.\n"
+        help_txt += "📷 [/foto](command:/foto): Solicita al bot una foto desde la cámara web en línea.\n"
+        help_txt += "🖼️ [/foto_procesada](command:/foto_procesada): Solicita al bot una foto con detección de objetos.\n"
+        help_txt += "🔄 [/foto_procesada_loop](command:/foto_procesada_loop): Activa el modo de detección de objetos en bucle.\n\n"
 
-    # Enviar la imagen
-    bot.send_photo(message.chat.id, photo=image_bytes)
+        help_txt += "¡No dudes en utilizar estos comandos para interactuar conmigo! 😊"
 
-# Manejador para el comando '/foto_procesada'
-@bot.message_handler(commands=['foto_procesada'])
-def handle_photo(message):
+        bot.send_message(message.chat.id, help_txt, parse_mode='Markdown')
 
-    # Cargar la imagen con OpenCV
-    image = imgTools.descargar_imagen('https://www.acifalcoi.com/webcam/menejador.jpg')
-    image = imgTools.imagen_to_cv2(image)
+    # Manejador para el comando '/saludo'
+    @bot.message_handler(commands=['saludo'])
+    def handle_hola(message):
+        nonlocal saludo_activo
+        saludo_activo = True
+        while saludo_activo:
+            bot.send_message(message.chat.id, "Hola")
+            time.sleep(5)
 
-    image_yl = yl.detect_objects(image)
-    image = image_yl[0]
-    labels = image_yl[1]
+    # Manejador para el comando '/stop_saludo'
+    @bot.message_handler(commands=['stop_saludo'])
+    def handle_stop_saludo(message):
+        nonlocal saludo_activo
+        saludo_activo = False
+        bot.send_message(message.chat.id, "El saludo ha sido detenido.")
 
-    # Convertir la imagen a un formato adecuado para enviarla a través de Telegram
-    image_encode = cv2.imencode('.jpg', image)[1]
-    # Crear un array de bytes para enviar la imagen
-    image_bytes = np.array(image_encode).tobytes()
+    # Manejador para el comando '/foto'
+    @bot.message_handler(commands=['foto'])
+    def handle_photo(message):
 
-    # Enviar la imagen
-    bot.send_photo(message.chat.id, photo=image_bytes)
-    bot.send_message(message.chat.id, str(labels))
-
-# Función para manejar el comando '/foto_procesada_loop'
-@bot.message_handler(commands=['foto_procesada_loop'])
-def handle_photo(message):
-    print("Procesando...")
-    bot.send_message(message.chat.id, "Procesando en loop")
-    while True:  # Bucle infinito para ejecutar continuamente
         # Cargar la imagen con OpenCV
         image = imgTools.descargar_imagen('https://www.acifalcoi.com/webcam/menejador.jpg')
         image = imgTools.imagen_to_cv2(image)
 
-        fecha_descarga = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"Imagen descargada ({fecha_descarga}), {str(message.chat.id)}", end="\r")
+        # Convertir la imagen a un formato adecuado para enviarla a través de Telegram
+        image_encode = cv2.imencode('.jpg', image)[1]
+        # Crear un array de bytes para enviar la imagen
+        image_bytes = np.array(image_encode).tobytes()
+
+        # Enviar la imagen
+        bot.send_photo(message.chat.id, photo=image_bytes)
+
+    # Manejador para el comando '/foto_procesada'
+    @bot.message_handler(commands=['foto_procesada'])
+    def handle_photo(message):
+
+        # Cargar la imagen con OpenCV
+        image = imgTools.descargar_imagen('https://www.acifalcoi.com/webcam/menejador.jpg')
+        image = imgTools.imagen_to_cv2(image)
 
         image_yl = yl.detect_objects(image)
         image = image_yl[0]
         labels = image_yl[1]
 
-        # Verificar si hay algo en labels antes de enviar el mensaje
-        if labels:
-            # Convertir la imagen a un formato adecuado para enviarla a través de Telegram
-            image_encode = cv2.imencode('.jpg', image)[1]
-            # Crear un array de bytes para enviar la imagen
-            image_bytes = np.array(image_encode).tobytes()
+        # Convertir la imagen a un formato adecuado para enviarla a través de Telegram
+        image_encode = cv2.imencode('.jpg', image)[1]
+        # Crear un array de bytes para enviar la imagen
+        image_bytes = np.array(image_encode).tobytes()
 
-            # Enviar la imagen
-            bot.send_photo(message.chat.id, photo=image_bytes)
-            # bot.send_message(message.chat.id, str(labels))
+        # Enviar la imagen
+        bot.send_photo(message.chat.id, photo=image_bytes)
+        bot.send_message(message.chat.id, str(labels))
 
-        # Esperar un tiempo antes de la siguiente iteración para evitar sobrecargar el sistema
-        time.sleep(60)  # Esperar 1 minuto antes de la próxima ejecución
+    # Función para manejar el comando '/foto_procesada_loop'
+    @bot.message_handler(commands=['foto_procesada_loop'])
+    def handle_photo(message):
+        print("Procesando...")
+        bot.send_message(message.chat.id, "Procesando en loop")
+        while True:  # Bucle infinito para ejecutar continuamente
+            # Cargar la imagen con OpenCV
+            image = imgTools.descargar_imagen('https://www.acifalcoi.com/webcam/menejador.jpg')
+            image = imgTools.imagen_to_cv2(image)
 
-# Manejador para mensajes de texto
-@bot.message_handler(func=lambda message: True)
-def handle_text(message):
-    bot.reply_to(message, "¡Hola! Soy un bot creado con telebot. Puedo responder a tus mensajes.")
+            fecha_descarga = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            print(f"Imagen descargada ({fecha_descarga}), {str(message.chat.id)}", end="\r")
 
-print("Iniciando bot...")
-# Ejecutar el bot
-bot.polling()
+            image_yl = yl.detect_objects(image)
+            image = image_yl[0]
+            labels = image_yl[1]
+
+            # Verificar si hay algo en labels antes de enviar el mensaje
+            if labels:
+                # Convertir la imagen a un formato adecuado para enviarla a través de Telegram
+                image_encode = cv2.imencode('.jpg', image)[1]
+                # Crear un array de bytes para enviar la imagen
+                image_bytes = np.array(image_encode).tobytes()
+
+                # Enviar la imagen
+                bot.send_photo(message.chat.id, photo=image_bytes)
+                # bot.send_message(message.chat.id, str(labels))
+
+            # Esperar un tiempo antes de la siguiente iteración para evitar sobrecargar el sistema
+            time.sleep(60)  # Esperar 1 minuto antes de la próxima ejecución
+
+    # Manejador para mensajes de texto
+    @bot.message_handler(func=lambda message: True)
+    def handle_text(message):
+        bot.reply_to(message, "¡Hola! Soy un bot creado con telebot. Puedo responder a tus mensajes.")
+
+    print("Iniciando bot...")
+    # Ejecutar el bot
+    bot.polling()
+
+if __name__ == "__main__":
+    print("Iniciando bot")
+    main()
